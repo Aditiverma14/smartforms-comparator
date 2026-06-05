@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartForm Comparator - ECC vs S4 HANA</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-row">
+                <div class="logo">
+                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                        <rect width="32" height="32" rx="8" fill="#0054a6"/>
+                        <path d="M8 10h6v4H8zM18 10h6v4h-6zM8 18h6v4H8zM18 18h6v4h-6z" fill="#fff" opacity="0.9"/>
+                        <path d="M14 12h4M14 20h4" stroke="#fff" stroke-width="1.5"/>
+                    </svg>
+                    <h1>SmartForm Comparator</h1>
+                </div>
+                <button class="theme-toggle" id="themeToggle" title="Toggle Light/Dark Theme">
+                    <svg class="icon-sun" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                        <circle cx="10" cy="10" r="4" stroke="currentColor" stroke-width="1.5"/>
+                        <path d="M10 2v2M10 16v2M2 10h2M16 10h2M4.93 4.93l1.41 1.41M13.66 13.66l1.41 1.41M4.93 15.07l1.41-1.41M13.66 6.34l1.41-1.41" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                    </svg>
+                    <svg class="icon-moon" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                        <path d="M17.39 12.42A7.5 7.5 0 017.58 2.61a7.5 7.5 0 109.81 9.81z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+            </div>
+            <p class="tagline">Compare ECC &amp; S4 HANA SmartForm XML files</p>
+        </header>
+
+        <!-- Upload Section -->
+        <section class="upload-section" id="uploadSection">
+            <div class="upload-container">
+                <div class="upload-box" id="eccDropZone">
+                    <div class="upload-icon ecc">
+                        <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                            <circle cx="24" cy="24" r="22" stroke="currentColor" stroke-width="2" stroke-dasharray="4 4"/>
+                            <path d="M24 14v20M14 24h20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <h3>ECC SmartForm XML</h3>
+                    <p>Drop file here or click to browse</p>
+                    <input type="file" id="eccFileInput" accept=".xml" hidden>
+                    <div class="file-info" id="eccFileInfo" hidden>
+                        <span class="file-name" id="eccFileName"></span>
+                        <button class="remove-btn" onclick="removeFile('ecc')">&times;</button>
+                    </div>
+                    <span class="system-badge ecc-badge">ECC</span>
+                </div>
+
+                <div class="vs-divider">
+                    <span>VS</span>
+                </div>
+
+                <div class="upload-box" id="s4DropZone">
+                    <div class="upload-icon s4">
+                        <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                            <circle cx="24" cy="24" r="22" stroke="currentColor" stroke-width="2" stroke-dasharray="4 4"/>
+                            <path d="M24 14v20M14 24h20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <h3>S4 HANA SmartForm XML</h3>
+                    <p>Drop file here or click to browse</p>
+                    <input type="file" id="s4FileInput" accept=".xml" hidden>
+                    <div class="file-info" id="s4FileInfo" hidden>
+                        <span class="file-name" id="s4FileName"></span>
+                        <button class="remove-btn" onclick="removeFile('s4')">&times;</button>
+                    </div>
+                    <span class="system-badge s4-badge">S4</span>
+                </div>
+            </div>
+
+            <button class="compare-btn" id="compareBtn" disabled>
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                    <path d="M3 10h14M13 6l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Compare SmartForms
+            </button>
+        </section>
+
+        <!-- Loading -->
+        <section class="loading-section" id="loadingSection" hidden>
+            <div class="spinner"></div>
+            <p>Parsing and comparing SmartForm XMLs...</p>
+        </section>
+
+        <!-- Results Section -->
+        <section class="results-section" id="resultsSection" hidden>
+            <!-- Back button -->
+            <button class="back-btn" onclick="resetView()">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                    <path d="M10 12L6 8l4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+                Upload New Files
+            </button>
+
+            <!-- File Info Cards -->
+            <div class="file-cards" id="fileCards"></div>
+
+            <!-- Summary Stats -->
+            <div class="summary-stats" id="summaryStats"></div>
+
+            <!-- View Tabs -->
+            <div class="view-tabs">
+                <button class="view-tab active" onclick="switchView('diff', this)">Differences Only</button>
+                <button class="view-tab" onclick="switchView('layout', this)">Full Layout View (All Heights/Widths)</button>
+            </div>
+
+            <!-- Search & Filters -->
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="Search differences... (e.g. WHEIGHT, margin, MAIN, window name)" />
+            </div>
+            <div class="filter-bar" id="filterBar"></div>
+
+            <!-- Diff Results -->
+            <div class="diff-results" id="diffResults"></div>
+
+            <!-- Full Layout View -->
+            <div class="layout-view" id="layoutView" hidden></div>
+        </section>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

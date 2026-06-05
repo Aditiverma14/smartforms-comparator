@@ -1,0 +1,15 @@
+{
+  "name": "smartform-comparator",
+  "version": "1.0.0",
+  "description": "SAP SmartForm XML Comparison Tool - Compare ECC vs S4 HANA SmartForms",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "express": "4.18.2",
+    "multer": "1.4.5-lts.1",
+    "fast-xml-parser": "4.3.2"
+  }
+}
