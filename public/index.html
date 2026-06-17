@@ -107,7 +107,10 @@
             <!-- View Tabs -->
             <div class="view-tabs">
                 <button class="view-tab active" onclick="switchView('diff', this)">Differences Only</button>
-                <button class="view-tab" onclick="switchView('layout', this)">Full Layout View (All Heights/Widths)</button>
+                <button class="view-tab" onclick="switchView('size', this)">Size</button>
+                <button class="view-tab" onclick="switchView('conditions', this)">Conditions</button>
+                <button class="view-tab" onclick="switchView('missing', this)">Missing Nodes</button>
+                <button class="view-tab" onclick="switchView('layout', this)">Full Layout View</button>
             </div>
 
             <!-- Search & Filters -->
@@ -118,6 +121,15 @@
 
             <!-- Diff Results -->
             <div class="diff-results" id="diffResults"></div>
+
+            <!-- Size View (Height/Width/Top/Left) -->
+            <div class="layout-summary" id="sizeView" hidden></div>
+
+            <!-- Conditions View -->
+            <div class="layout-summary" id="conditionsView" hidden></div>
+
+            <!-- Missing Nodes View -->
+            <div class="layout-summary" id="missingView" hidden></div>
 
             <!-- Full Layout View -->
             <div class="layout-view" id="layoutView" hidden></div>

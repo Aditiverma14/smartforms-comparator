@@ -80,7 +80,10 @@ app.post('/api/compare', upload.fields([
       differences: differences,
       // Include all layout properties from both files for full view
       eccProperties: eccForm.properties,
-      s4Properties: s4Form.properties
+      s4Properties: s4Form.properties,
+      // Node lists for missing nodes overview
+      eccNodes: eccForm.nodeList,
+      s4Nodes: s4Form.nodeList
     };
 
     res.json(result);
