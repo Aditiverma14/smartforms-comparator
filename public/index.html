@@ -19,15 +19,18 @@
                     </svg>
                     <h1>SmartForm Comparator</h1>
                 </div>
-                <button class="theme-toggle" id="themeToggle" title="Toggle Light/Dark Theme">
-                    <svg class="icon-sun" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                        <circle cx="10" cy="10" r="4" stroke="currentColor" stroke-width="1.5"/>
-                        <path d="M10 2v2M10 16v2M2 10h2M16 10h2M4.93 4.93l1.41 1.41M13.66 13.66l1.41 1.41M4.93 15.07l1.41-1.41M13.66 6.34l1.41-1.41" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-                    </svg>
-                    <svg class="icon-moon" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                        <path d="M17.39 12.42A7.5 7.5 0 017.58 2.61a7.5 7.5 0 109.81 9.81z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </button>
+                <div style="position:absolute;right:0;top:50%;transform:translateY(-50%);display:flex;align-items:center;gap:12px;">
+                    <a href="/search.html" style="font-size:0.82em;color:var(--text-secondary);text-decoration:none;padding:6px 12px;border:1px solid var(--border);border-radius:8px;">&#x1F50D; Search Across Forms</a>
+                    <button class="theme-toggle" id="themeToggle" title="Toggle Light/Dark Theme">
+                        <svg class="icon-sun" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <circle cx="10" cy="10" r="4" stroke="currentColor" stroke-width="1.5"/>
+                            <path d="M10 2v2M10 16v2M2 10h2M16 10h2M4.93 4.93l1.41 1.41M13.66 13.66l1.41 1.41M4.93 15.07l1.41-1.41M13.66 6.34l1.41-1.41" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                        </svg>
+                        <svg class="icon-moon" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <path d="M17.39 12.42A7.5 7.5 0 017.58 2.61a7.5 7.5 0 109.81 9.81z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                </div>
             </div>
             <p class="tagline">Compare ECC &amp; S4 HANA SmartForm XML files</p>
         </header>
