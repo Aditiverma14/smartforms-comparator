@@ -23,6 +23,31 @@ const upload = multer({
 // Serve static files
 app.use(express.static(path.join(__dirname, 'public')));
 
+// API: Parse a single form (for search feature)
+app.post('/api/parse-form', upload.single('xmlFile'), (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({ error: 'XML file is required' });
+    }
+
+    const xmlString = req.file.buffer.toString('utf-8');
+    const form = new SmartFormParser(xmlString, 'search').parse();
+
+    res.json({
+      formName: form.header.FORMNAME || req.file.originalname,
+      header: form.header,
+      interfaceParams: form.interfaceParams,
+      globalTypes: form.globalTypes,
+      globalData: form.globalData,
+      globalCode: form.globalCode,
+      properties: form.properties
+    });
+  } catch (error) {
+    console.error('Parse error:', error);
+    res.status(500).json({ error: `Failed to parse: ${error.message}` });
+  }
+});
+
 // API: Compare two XML files
 app.post('/api/compare', upload.fields([
   { name: 'eccFile', maxCount: 1 },
